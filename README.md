@@ -27,20 +27,20 @@ npm install safe-number-js
 
 ```javascript
 // 导入库
-const SafeNumber = require("safe-number-js");
+const SafeNumber = require('safe-number-js');
 
 // 创建实例
 const safeNumber = new SafeNumber({
   convertAll: false,
   decimalPlaces: 2,
-  specialKeys: ["id", "userId"],
+  specialKeys: ['id', 'userId'],
 });
 
 // 处理数据
 const data = {
-  id: "9007199254740993",
+  id: '9007199254740993',
   price: 0.1 + 0.2,
-  items: [{ id: "9007199254740994", amount: 99.999 }],
+  items: [{ id: '9007199254740994', amount: 99.999 }],
 };
 
 const result = safeNumber.handleResponse(data);
@@ -85,9 +85,9 @@ safeNumber.handleResponse(floatNumbers);
 const apiResponse = {
   code: 200,
   data: {
-    userId: "9007199254740993",
+    userId: '9007199254740993',
     balance: 9007199254740992,
-    items: [{ id: "9007199254740994", amount: 99.999 }],
+    items: [{ id: '9007199254740994', amount: 99.999 }],
   },
 };
 safeNumber.handleResponse(apiResponse);
@@ -98,7 +98,7 @@ safeNumber.handleResponse(apiResponse);
 ```javascript
 const price = 1234.56;
 safeNumber.formatCurrency(price); // ¥1,234.56
-safeNumber.formatCurrency(price, "USD"); // $1,234.56
+safeNumber.formatCurrency(price, 'USD'); // $1,234.56
 ```
 
 ### 5. 自定义舍入
@@ -106,8 +106,8 @@ safeNumber.formatCurrency(price, "USD"); // $1,234.56
 ```javascript
 const number = 10.345;
 safeNumber.customRound(number, 2); // 10.35
-safeNumber.customRound(number, 2, "floor"); // 10.34
-safeNumber.customRound(number, 2, "ceil"); // 10.35
+safeNumber.customRound(number, 2, 'floor'); // 10.34
+safeNumber.customRound(number, 2, 'ceil'); // 10.35
 ```
 
 ## 🔍 应用场景
@@ -133,9 +133,9 @@ safeNumber.customRound(number, 2, "ceil"); // 10.35
 
 ## 📞 联系方式
 
-- 作者：Casdoor Team
-- Email：admin@casbin.org
-- GitHub：https://github.com/casdoor
+- 作者：GW
+- Email：xxx
+- GitHub：https://github.com/GWnbsp
 
 ## 🙏 致谢
 
