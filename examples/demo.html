@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeNumber.js Demo</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --hover-color: #45a049;
+            --border-color: #ddd;
+            --background-color: #f5f5f5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: var(--background-color);
+            border-radius: 8px;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .demo-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .result {
+            background-color: var(--background-color);
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+
+        .error {
+            color: #d32f2f;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .success {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .demo-section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>SafeNumber.js Demo</h1>
+        <p>A lightweight JavaScript library for handling numeric precision and large numbers</p>
+    </div>
+
+    <div class="demo-section">
+        <h2>1. Basic Number Handling</h2>
+        <div class="input-group">
+            <label>Enter a number:</label>
+            <input type="text" id="basic-input" placeholder="e.g., 3.14159" value="3.14159">
+        </div>
+        <div class="input-group">
+            <label>Decimal places:</label>
+            <input type="number" id="decimal-places" min="0" max="10" value="2">
+        </div>
+        <button onclick="demoBasicHandling()">Process Number</button>
+        <div id="basic-result" class="result"></div>
+    </div>
+
+    <div class="demo-section">
+        <h2>2. Special Fields Handling</h2>
+        <div class="input-group">
+            <label>JSON Input:</label>
+            <textarea id="special-input">{
+    "userId": "12345678901234567890",
+    "orderId": "987654321",
+    "amount": 1000.567,
+    "points": 987654321098765432
+}</textarea>
+        </div>
+        <button onclick="demoSpecialFields()">Process Object</button>
+        <div id="special-result" class="result"></div>
+    </div>
+
+    <div class="demo-section">
+        <h2>3. Currency Formatting</h2>
+        <div class="input-group">
+            <label>Enter amount:</label>
+            <input type="text" id="currency-input" placeholder="e.g., 1234.56" value="1234.56">
+        </div>
+        <div class="input-group">
+            <label>Currency:</label>
+            <select id="currency-select">
+                <option value="CNY">CNY (Chinese Yuan)</option>
+                <option value="USD">USD (US Dollar)</option>
+                <option value="EUR">EUR (Euro)</option>
+                <option value="JPY">JPY (Japanese Yen)</option>
+            </select>
+        </div>
+        <button onclick="demoCurrency()">Format Currency</button>
+        <div id="currency-result" class="result"></div>
+    </div>
+
+    <div class="demo-section">
+        <h2>4. API Response Processing</h2>
+        <div class="input-group">
+            <label>JSON Response:</label>
+            <textarea id="api-input">{
+    "code": 200,
+    "data": {
+        "userId": "9007199254740991",
+        "orders": [
+            { "id": "1234567890", "amount": 99.99 },
+            { "id": "1234567891", "amount": 199.999 }
+        ],
+        "statistics": {
+            "totalAmount": 299.989,
+            "averageAmount": 149.9945
+        }
+    }
+}</textarea>
+        </div>
+        <button onclick="demoApiResponse()">Process Response</button>
+        <div id="api-result" class="result"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/tslib@2.6.2/tslib.min.js"></script>
+    <script src="../dist/safeNumber.min.js"></script>
+    <script>
+        // SafeNumber is now directly available as a constructor
+        const safeNumber = new SafeNumber({
+            convertAll: false,
+            specialKeys: ['id', 'userId', 'orderId'],
+            decimalPlaces: 2
+        });
+
+        function displayResult(id, data, error = false) {
+            const element = document.getElementById(id);
+            element.className = 'result' + (error ? ' error' : '');
+            element.textContent = typeof data === 'object' ?
+                JSON.stringify(data, null, 2) : data.toString();
+        }
+
+        function demoBasicHandling() {
+            try {
+                const input = document.getElementById('basic-input').value;
+                const places = parseInt(document.getElementById('decimal-places').value);
+                const number = parseFloat(input);
+
+                if (isNaN(number)) {
+                    throw new Error('Invalid number input');
+                }
+
+                const result = safeNumber.handleResponse({
+                    original: input,
+                    parsed: number,
+                    rounded: safeNumber.customRound(number, places),
+                    roundedUp: safeNumber.customRound(number, places, 'ceil'),
+                    roundedDown: safeNumber.customRound(number, places, 'floor')
+                });
+
+                displayResult('basic-result', result);
+            } catch (error) {
+                displayResult('basic-result', error.message, true);
+            }
+        }
+
+        function demoSpecialFields() {
+            try {
+                const input = document.getElementById('special-input').value;
+                const data = JSON.parse(input);
+                const result = safeNumber.handleResponse(data);
+                displayResult('special-result', result);
+            } catch (error) {
+                displayResult('special-result', error.message, true);
+            }
+        }
+
+        function demoCurrency() {
+            try {
+                const amount = parseFloat(document.getElementById('currency-input').value);
+                const currency = document.getElementById('currency-select').value;
+
+                if (isNaN(amount)) {
+                    throw new Error('Invalid amount');
+                }
+
+                const formatted = safeNumber.formatCurrency(amount, currency);
+                displayResult('currency-result', formatted);
+            } catch (error) {
+                displayResult('currency-result', error.message, true);
+            }
+        }
+
+        function demoApiResponse() {
+            try {
+                const input = document.getElementById('api-input').value;
+                const data = JSON.parse(input);
+                const result = safeNumber.handleResponse(data);
+                displayResult('api-result', result);
+            } catch (error) {
+                displayResult('api-result', error.message, true);
+            }
+        }
+
+        // Initialize with example data
+        demoBasicHandling();
+        demoSpecialFields();
+        demoCurrency();
+        demoApiResponse();
+    </script>
+</body>
+
+</html>
