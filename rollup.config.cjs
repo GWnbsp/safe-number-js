@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 const { babel } = require('@rollup/plugin-babel');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
@@ -56,7 +58,8 @@ const config = [
             {
                 file: packageJson.module,
                 format: 'es',
-                sourcemap: true
+                sourcemap: true,
+                exports: 'default'
             }
         ],
         plugins: [
